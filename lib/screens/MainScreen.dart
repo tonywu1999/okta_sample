@@ -33,7 +33,9 @@ class MainScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () async {
                   await AuthProvider.of(context).authService.logout();
-                  Navigator.of(context).pushReplacementNamed('/splash');
+                  await AuthProvider.of(context).authService.revokeAccessToken();
+                  await AuthProvider.of(context).authService.revokeRefreshToken();
+                  Navigator.of(context).pushReplacementNamed('/login');
                 },
                 child: const Text('Logout', style: TextStyle(fontSize: 20)),
               ),
@@ -56,6 +58,7 @@ class MainScreen extends StatelessWidget {
                       .authService
                       .getAccessToken();
                   Fluttertoast.showToast(msg: "AccessToken: $accessToken");
+                  print(accessToken);
                 },
                 child: const Text('GetAccessToken',
                     style: TextStyle(fontSize: 20)),
@@ -68,87 +71,6 @@ class MainScreen extends StatelessWidget {
                   Fluttertoast.showToast(msg: "idToken: $idToken");
                 },
                 child: const Text('GetIdToken', style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .revokeAccessToken();
-                  Fluttertoast.showToast(msg: "result: $result");
-                  Navigator.of(context).pushReplacementNamed('/splash');
-                },
-                child: const Text('RevokeAccessToken',
-                    style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .revokeIdToken();
-                  Fluttertoast.showToast(msg: "result: $result");
-                  Navigator.of(context).pushReplacementNamed('/splash');
-                },
-                child:
-                    const Text('RevokeIdToken', style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .revokeRefreshToken();
-                  Fluttertoast.showToast(msg: "result: $result");
-                  Navigator.of(context).pushReplacementNamed('/splash');
-                },
-                child: const Text('RevokeRefreshToken',
-                    style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result =
-                      await AuthProvider.of(context).authService.clearTokens();
-                  Fluttertoast.showToast(msg: "result: $result");
-                  Navigator.of(context).pushReplacementNamed('/splash');
-                },
-                child:
-                    const Text('ClearTokens', style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .introspectAccessToken();
-                  Fluttertoast.showToast(msg: "introspectAccessToken: $result");
-                },
-                child: const Text('IntrospectAccessToken',
-                    style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .introspectIdToken();
-                  Fluttertoast.showToast(msg: "introspectIdToken: $result");
-                },
-                child: const Text('introspectIdToken',
-                    style: TextStyle(fontSize: 20)),
-              ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () async {
-                  var result = await AuthProvider.of(context)
-                      .authService
-                      .introspectRefreshToken();
-                  Fluttertoast.showToast(
-                      msg: "introspectRefreshToken: $result");
-                },
-                child: const Text('introspectRefreshToken',
-                    style: TextStyle(fontSize: 20)),
               ),
               const SizedBox(height: 30),
               RaisedButton(

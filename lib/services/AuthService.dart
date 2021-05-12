@@ -6,19 +6,20 @@ class AuthOktaService {
   var oktaSdk = OktaSDK();
   FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
-  static const String OKTA_DOMAIN = 'dev-590808.okta.com';
+  static const String OKTA_DOMAIN = 'insert_domain.okta.com';
   static const String OKTA_AUTHORIZER = 'default';
-  static const String OKTA_CLIENT_ID = '0oa11v7wzcWEjmK4u4x7';
+  static const String OKTA_CLIENT_ID = 'insert_client_id_here';
 
   static const String OKTA_ISSUER_URL =
       'https://$OKTA_DOMAIN/oauth2/$OKTA_AUTHORIZER';
   static const String OKTA_DISCOVERY_URL =
       'https://$OKTA_DOMAIN/.well-known/openid-configuration';
 
-  static const String OKTA_REDIRECT_URI = 'com.deere.phoenix:/callback';
-  static const String OKTA_LOGOUT_REDIRECT_URI = 'com.deere.phoenix:/splash';
+  static const String OKTA_REDIRECT_URI = 'insert_redirect_uri';
+  static const String OKTA_LOGOUT_REDIRECT_URI = 'insert_redirect_uri_logout';
 
   static final oktaBaseRequest = BaseRequest(
+      issuer: OKTA_ISSUER_URL,
       clientId: OKTA_CLIENT_ID,
       discoveryUrl: OKTA_DISCOVERY_URL,
       endSessionRedirectUri: OKTA_LOGOUT_REDIRECT_URI,
@@ -166,20 +167,25 @@ class AuthOktaService {
       if (oktaSdk.isInitialized == false) {
         await this.createConfig();
       }
-      return await oktaSdk.introspectRefreshToken();
+      String value = await oktaSdk.introspectRefreshToken();
+      print(value);
+      return value;
     } catch (e) {
       print(e);
     }
   }
 
-  Future<String> refreshTokens() async {
+  Future<bool> refreshTokens() async {
     try {
       if (oktaSdk.isInitialized == false) {
         await this.createConfig();
       }
-      return await oktaSdk.refreshTokens();
+      String tokens = await oktaSdk.refreshTokens();
+      print(tokens);
+      return true;
     } catch (e) {
       print(e);
+      return false;
     }
   }
 }

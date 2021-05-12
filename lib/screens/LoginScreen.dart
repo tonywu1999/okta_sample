@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/providers/OktaProvider.dart';
-import 'package:phoenix/screens/MainScreen.dart';
+import 'package:phoenix/screens/SplashScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/login';
@@ -8,12 +8,10 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          child: RaisedButton(
-            color: Colors.blue,
-            textColor: Colors.black,
+          child: ElevatedButton(
             onPressed: () async {
               await AuthProvider.of(context).authService.authorize();
-              Navigator.of(context).pushNamed(MainScreen.routeName);
+              Navigator.of(context).pushNamed(SplashScreen.routeName);
             },
             child: Text('Authorize'),
           ),
